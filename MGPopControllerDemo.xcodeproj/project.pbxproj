@@ -14,6 +14,7 @@
 		F11BC6FA1D5323FF008E5436 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F11BC6F81D5323FF008E5436 /* Main.storyboard */; };
 		F11BC6FC1D5323FF008E5436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F11BC6FB1D5323FF008E5436 /* Assets.xcassets */; };
 		F11BC6FF1D5323FF008E5436 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F11BC6FD1D5323FF008E5436 /* LaunchScreen.storyboard */; };
+		F11BC7091D53251E008E5436 /* MGPopController.m in Sources */ = {isa = PBXBuildFile; fileRef = F11BC7081D53251E008E5436 /* MGPopController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,8 @@
 		F11BC6FB1D5323FF008E5436 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F11BC6FE1D5323FF008E5436 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F11BC7001D5323FF008E5436 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F11BC7071D53251E008E5436 /* MGPopController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPopController.h; sourceTree = "<group>"; };
+		F11BC7081D53251E008E5436 /* MGPopController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPopController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +85,7 @@
 		F11BC6EE1D5323FF008E5436 /* MGPopControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F11BC7061D53250B008E5436 /* MGPopController */,
 				F11BC6F21D5323FF008E5436 /* AppDelegate.h */,
 				F11BC6F31D5323FF008E5436 /* AppDelegate.m */,
 				F11BC6F51D5323FF008E5436 /* ViewController.h */,
@@ -101,6 +105,15 @@
 				F11BC6F01D5323FF008E5436 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F11BC7061D53250B008E5436 /* MGPopController */ = {
+			isa = PBXGroup;
+			children = (
+				F11BC7071D53251E008E5436 /* MGPopController.h */,
+				F11BC7081D53251E008E5436 /* MGPopController.m */,
+			);
+			path = MGPopController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +240,7 @@
 				F11BC6F71D5323FF008E5436 /* ViewController.m in Sources */,
 				F11BC6F41D5323FF008E5436 /* AppDelegate.m in Sources */,
 				F11BC6F11D5323FF008E5436 /* main.m in Sources */,
+				F11BC7091D53251E008E5436 /* MGPopController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
