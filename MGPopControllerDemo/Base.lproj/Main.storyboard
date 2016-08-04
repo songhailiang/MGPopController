@@ -17,19 +17,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5R-dM-57V">
-                                <rect key="frame" x="48" y="92" width="30" height="30"/>
-                                <state key="normal" title="Pop"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8xB-vS-cfs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ZQO-3n-5x8">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZQO-3n-5x8" id="WtF-Qs-8uH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <action selector="popButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hMx-el-1UO"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="CxO-na-Utz"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="MCJ-YB-RJc"/>
                                 </connections>
-                            </button>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="b5R-dM-57V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="28" id="DNz-h0-SsR"/>
-                            <constraint firstItem="b5R-dM-57V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="48" id="Kt8-dh-Ak5"/>
+                            <constraint firstAttribute="trailing" secondItem="8xB-vS-cfs" secondAttribute="trailing" id="6mD-S9-012"/>
+                            <constraint firstItem="8xB-vS-cfs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="hHd-3i-VXh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8xB-vS-cfs" secondAttribute="bottom" id="iBb-gK-xBA"/>
+                            <constraint firstItem="8xB-vS-cfs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="iTw-JH-YZM"/>
+                            <constraint firstItem="8xB-vS-cfs" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="t9M-M7-LQY"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hHd-3i-VXh"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="N06-55-3EE"/>
                 </viewController>

@@ -17,6 +17,8 @@
     if (self) {
         _image = image;
         _action = action;
+        
+        _autoDismiss = YES;
     }
     
     return self;
@@ -59,10 +61,24 @@
         _message = message;
         _image = image;
         
-        _actions = [NSMutableArray array];
+        [self setupDefault];
     }
     
     return self;
+}
+
+- (void)setupDefault {
+    
+    _actions = [NSMutableArray array];
+
+    _backgroundColor = [UIColor whiteColor];
+    _titleFont = [UIFont systemFontOfSize:36.0];
+    _titleColor = [UIColor darkGrayColor];
+    _messageFont = [UIFont systemFontOfSize:18.0];
+    _messageColor = [UIColor lightGrayColor];
+    _closeButtonTintColor = [UIColor lightGrayColor];
+    _cornerRadius = 10.0;
+    _horizontalOffset = 50;
 }
 
 #pragma mark - Life Circle
@@ -109,7 +125,6 @@
     
     [self makeConstrains];
     
-    self.containerView.backgroundColor = [UIColor colorWithRed:1.0 green:234/255.0 blue:170/255.0 alpha:1.0];
     self.titleLabel.text = _title;
     self.messageLabel.text = _message;
     self.topImageView.image = _image;
@@ -118,9 +133,9 @@
 - (void)makeConstrains {
     
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.offset(50);
-        make.trailing.offset(-50);
-        make.centerY.equalTo(self.view);
+        make.leading.offset(_horizontalOffset);
+        make.trailing.offset(-_horizontalOffset);
+        make.centerY.equalTo(self.view).offset(self.verticalOffset);
     }];
     
     [self.topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -192,7 +207,7 @@
     }];
     
     CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    animation.fromValue = @(0.9);
+    animation.fromValue = @(0.8);
     animation.toValue = @(1);
     animation.duration = 0.15;
     animation.autoreverses = NO;
@@ -205,12 +220,52 @@
 
 - (void)dismiss {
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
+        
+        self.containerView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
+        self.containerView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
         [weakSelf.view removeFromSuperview];
         [weakSelf removeFromParentViewController];
-    } completion:^(BOOL finished) {
-        
     }];
+}
+
+#pragma mark - getter、setter
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    _backgroundColor = backgroundColor;
+    self.containerView.backgroundColor = backgroundColor;
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    _titleFont = titleFont;
+    self.titleLabel.font = _titleFont;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+    _titleColor = titleColor;
+    self.titleLabel.textColor = _titleColor;
+}
+
+- (void)setMessageFont:(UIFont *)messageFont {
+    _messageFont = messageFont;
+    self.messageLabel.font = _messageFont;
+}
+
+- (void)setMessageColor:(UIColor *)messageColor {
+    _messageColor = messageColor;
+    self.messageLabel.textColor = _messageColor;
+}
+
+- (void)setCloseButtonTintColor:(UIColor *)closeButtonTintColor {
+    _closeButtonTintColor = closeButtonTintColor;
+    self.closeButton.tintColor = _closeButtonTintColor;
+}
+
+- (void)setCornerRadius:(NSInteger)cornerRadius {
+    _cornerRadius = cornerRadius;
+    self.containerView.layer.cornerRadius = _cornerRadius;
 }
 
 #pragma mark - Private Method
@@ -226,6 +281,9 @@
         MGPopAction *action = [self.actions objectAtIndex:sender.tag];
         if (action.action) {
             action.action();
+        }
+        if (action.autoDismiss) {
+            [self dismiss];
         }
     }
 }
@@ -269,7 +327,8 @@
     
     if (!_containerView) {
         _containerView = [[UIView alloc] init];
-        _containerView.layer.cornerRadius = 20.0;
+        _containerView.layer.cornerRadius = _cornerRadius;
+        _containerView.backgroundColor = _backgroundColor;
     }
     
     return _containerView;
@@ -290,8 +349,8 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.numberOfLines = 1;
-        _titleLabel.font = [UIFont systemFontOfSize:36.0];
-        _titleLabel.textColor = [UIColor colorWithRed:105/255.0 green:60/255.0 blue:29/255.0 alpha:1.0];
+        _titleLabel.font = _titleFont;
+        _titleLabel.textColor = _titleColor;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     
@@ -303,8 +362,8 @@
     if (!_messageLabel) {
         _messageLabel = [[UILabel alloc] init];
         _messageLabel.numberOfLines = 0;
-        _messageLabel.font = [UIFont systemFontOfSize:18.0];
-        _messageLabel.textColor = [UIColor colorWithRed:105/255.0 green:60/255.0 blue:29/255.0 alpha:1.0];
+        _messageLabel.font = _messageFont;
+        _messageLabel.textColor = _messageColor;
         _messageLabel.textAlignment = NSTextAlignmentCenter;
     }
     
@@ -315,7 +374,7 @@
     
     if (!_closeButton) {
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _closeButton.tintColor = [UIColor colorWithRed:207/255.0 green:178/255.0 blue:97/255.0 alpha:1.0];
+        _closeButton.tintColor = _closeButtonTintColor;
         [_closeButton setImage:[UIImage imageNamed:@"icon_close"] forState:UIControlStateNormal];
         [_closeButton addTarget:self action:@selector(closeButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     }
