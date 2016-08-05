@@ -22,6 +22,8 @@
         _autoDismiss = YES;
         _titleColor = [UIColor colorWithRed:0 green:0.48 blue:1.0 alpha:1.0];
         _titleFont = [UIFont systemFontOfSize:17.0];
+        _disabledTitleColor = [UIColor lightGrayColor];
+        _enable = YES;
     }
     
     return self;
@@ -117,7 +119,7 @@
 
 - (void)setupUI {
     
-    self.view.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     
     [self.view addSubview:self.containerView];
     [self.containerView addSubview:self.topImageView];
@@ -136,8 +138,10 @@
         else if (action.title.length) {
             [btn setTitle:action.title forState:UIControlStateNormal];
             [btn setTitleColor:action.titleColor forState:UIControlStateNormal];
+            [btn setTitleColor:action.disabledTitleColor forState:UIControlStateDisabled];
             btn.titleLabel.font = action.titleFont;
         }
+        btn.enabled = action.enable;
         
         [self.actionContainerView addSubview:btn];
     }];

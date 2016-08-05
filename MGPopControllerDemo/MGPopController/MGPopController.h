@@ -14,8 +14,11 @@
 @property (nonatomic, readonly, strong) UIImage             *image;
 @property (nonatomic, readonly, copy)   dispatch_block_t    action;
 
-@property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, assign) BOOL enable;
+
 @property (nonatomic, strong) UIFont *titleFont;
+@property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, strong) UIColor *disabledTitleColor;
 
 //自动隐藏：默认YES
 @property (nonatomic, assign) BOOL autoDismiss;

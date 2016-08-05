@@ -168,9 +168,12 @@
             [alert addAction:[UIAlertAction actionWithTitle:@"继续拆宝箱" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSLog(@"继续拆宝箱...");
             }]];
-            [alert addAction:[UIAlertAction actionWithTitle:@"分享给好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"分享给好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSLog(@"分享给好友...");
-            }]];
+            }];
+            action.enabled = NO;
+            [alert addAction:action];
             
             [self presentViewController:alert animated:YES completion:nil];
         }
@@ -182,9 +185,12 @@
                 NSLog(@"继续拆宝箱...");
             }]];
             
-            [pop addAction:[MGPopAction actionWithTitle:@"分享给好友" action:^{
+            MGPopAction *action = [MGPopAction actionWithTitle:@"分享给好友" action:^{
                 NSLog(@"分享给好友...");
-            }]];
+            }];
+            action.enable = NO;
+            
+            [pop addAction:action];
             pop.titleFont = [UIFont boldSystemFontOfSize:17.0f];
             pop.messageFont = [UIFont systemFontOfSize:13.0];
             pop.showActionSeparator = YES;
