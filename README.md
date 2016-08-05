@@ -36,6 +36,7 @@ A custom popup view。自定义弹出框。
 
 # 使用方法
 类似系统UIAlertController的用法：
+
 1.实例化MGPopController
 ```objc
 MGPopController *pop = [[MGPopController alloc] initWithTitle:@"恭喜您" message:@"获得一把拆宝箱钥匙" image:[UIImage imageNamed:@"image_key"]];
@@ -59,4 +60,9 @@ __weak __typeof(&*self)weakSelf = self
 
 更多用法，请参见Demo！
 
+# 未来计划
+- 增加对输入框的支持
+
+
+# 最后
 Enjoy Yourself！！
