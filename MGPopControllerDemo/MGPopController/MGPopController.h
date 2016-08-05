@@ -14,10 +14,15 @@
 @property (nonatomic, readonly, strong) UIImage             *image;
 @property (nonatomic, readonly, copy)   dispatch_block_t    action;
 
+@property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, strong) UIFont *titleFont;
+
 //自动隐藏：默认YES
 @property (nonatomic, assign) BOOL autoDismiss;
 
 + (instancetype)actionWithImage:(UIImage *)image action:(dispatch_block_t)action;
+
++ (instancetype)actionWithTitle:(NSString *)title action:(dispatch_block_t)action;
 
 @end
 
@@ -66,6 +71,31 @@
  *  水平距离偏移量，默认：50（距离左右边距都是50）
  */
 @property (nonatomic, assign) NSInteger horizontalOffset;
+
+/**
+ *  操作View距离左右两侧边距，默认：10
+ */
+@property (nonatomic, assign) NSInteger actionPaddingLeftRight;
+
+/**
+ *  操作View距离底部距离，默认：15
+ */
+@property (nonatomic, assign) NSInteger actionPaddingBottom;
+
+/**
+ *  操作按钮之间的间距，默认：10
+ */
+@property (nonatomic, assign) NSInteger actionSpacing;
+
+/**
+ *  操作按钮之间的分割线，默认：NO
+ */
+@property (nonatomic, assign) BOOL showActionSeparator;
+
+/**
+ *  是否显示右上角关闭按钮，默认：YES
+ */
+@property (nonatomic, assign) BOOL showCloseButton;
 
 #pragma mark - Public Method
 

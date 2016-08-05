@@ -11,14 +11,17 @@
 
 @implementation MGPopAction
 
-- (instancetype)initWithImage:(UIImage *)image action:(dispatch_block_t)action {
+- (instancetype)initWithImage:(UIImage *)image title:(NSString *)title action:(dispatch_block_t)action {
 
     self = [super init];
     if (self) {
         _image = image;
         _action = action;
+        _title = title;
         
         _autoDismiss = YES;
+        _titleColor = [UIColor colorWithRed:0 green:0.48 blue:1.0 alpha:1.0];
+        _titleFont = [UIFont systemFontOfSize:17.0];
     }
     
     return self;
@@ -26,7 +29,12 @@
 
 + (instancetype)actionWithImage:(UIImage *)image action:(dispatch_block_t)action {
 
-    return [[MGPopAction alloc] initWithImage:image action:action];
+    return [[MGPopAction alloc] initWithImage:image title:nil action:action];
+}
+
++ (instancetype)actionWithTitle:(NSString *)title action:(dispatch_block_t)action {
+
+    return [[MGPopAction alloc] initWithImage:nil title:title action:action];
 }
 
 @end
@@ -79,6 +87,12 @@
     _closeButtonTintColor = [UIColor lightGrayColor];
     _cornerRadius = 10.0;
     _horizontalOffset = 50;
+    
+    _showActionSeparator = NO;
+    _actionPaddingLeftRight = 10;
+    _actionSpacing = 10;
+    _actionPaddingBottom = 15;
+    _showCloseButton = YES;
 }
 
 #pragma mark - Life Circle
@@ -119,6 +133,11 @@
         if (action.image) {
             [btn setImage:action.image forState:UIControlStateNormal];
         }
+        else if (action.title.length) {
+            [btn setTitle:action.title forState:UIControlStateNormal];
+            [btn setTitleColor:action.titleColor forState:UIControlStateNormal];
+            btn.titleLabel.font = action.titleFont;
+        }
         
         [self.actionContainerView addSubview:btn];
     }];
@@ -128,6 +147,7 @@
     self.titleLabel.text = _title;
     self.messageLabel.text = _message;
     self.topImageView.image = _image;
+    self.closeButton.hidden = !self.showCloseButton;
 }
 
 - (void)makeConstrains {
@@ -155,10 +175,10 @@
     }];
     
     [self.actionContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.offset(10);
-        make.trailing.offset(-10);
+        make.leading.offset(self.actionPaddingLeftRight);
+        make.trailing.offset(-self.actionPaddingLeftRight);
         make.top.mas_equalTo(self.messageLabel.mas_bottom).offset(15);
-        make.bottom.equalTo(self.containerView).offset(-15);
+        make.bottom.equalTo(self.containerView).offset(-self.actionPaddingBottom);
     }];
     
     [self.closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -169,13 +189,13 @@
     
     //Actions
     NSInteger count = self.actions.count;
-    NSInteger space = 10; //按钮之间的空隙
     __block UIButton *preBtn;
     [self.actionContainerView.subviews enumerateObjectsUsingBlock:^(UIButton * _Nonnull btn, NSUInteger idx, BOOL * _Nonnull stop) {
        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
            make.top.bottom.offset(0);
+           make.height.equalTo(@44);
            if (preBtn) {
-               make.left.equalTo(preBtn.mas_right).offset(space);
+               make.left.equalTo(preBtn.mas_right).offset(self.actionSpacing);
                make.width.equalTo(preBtn.mas_width);
            }
            else {
@@ -188,6 +208,31 @@
         
         preBtn = btn;
     }];
+    
+    //分割线separator
+    if (self.showActionSeparator) {
+        //Top separator
+        UIView *topSeparator = [[UIView alloc] init];
+        topSeparator.backgroundColor = [UIColor colorWithRed:227/255.0 green:225/255.0 blue:228/255.0 alpha:1.0];
+        [self.actionContainerView addSubview:topSeparator];
+        [topSeparator mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.leading.trailing.offset(0);
+            make.height.equalTo(@0.5);
+        }];
+        
+        //vertical separator
+        NSInteger separatorNum = self.actions.count-1;
+        for (NSInteger i=0; i<separatorNum; i++) {
+            UIView *separator = [[UIView alloc] init];
+            separator.backgroundColor = [UIColor colorWithRed:227/255.0 green:225/255.0 blue:228/255.0 alpha:1.0];
+            [self.actionContainerView addSubview:separator];
+            [separator mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.bottom.offset(0);
+                make.width.equalTo(@0.5);
+                make.centerX.equalTo(self.actionContainerView).multipliedBy((i*2+1)/((CGFloat)separatorNum));
+            }];
+        }
+    }
 }
 
 #pragma mark - Public Method

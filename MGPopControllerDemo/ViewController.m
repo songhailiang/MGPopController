@@ -30,7 +30,9 @@
                     @"两个操作按钮",
                     @"点击操作按钮不隐藏弹出框",
                     @"无Image模式",
-                    @"自定义样式"
+                    @"自定义样式",
+                    @"系统UIAlertController",
+                    @"仿系统UIAlertController",
                     ];
 }
 
@@ -148,6 +150,48 @@
             pop.cornerRadius = 20;
             pop.verticalOffset = -CGRectGetHeight(self.view.frame)* 0.2;
             pop.horizontalOffset = 30;
+            
+            [pop addAction:[MGPopAction actionWithImage:[UIImage imageNamed:@"icon_box"] action:^{
+                NSLog(@"继续拆宝箱...");
+            }]];
+            
+            [pop addAction:[MGPopAction actionWithImage:[UIImage imageNamed:@"icon_share"] action:^{
+                NSLog(@"分享给好友...");
+            }]];
+            
+            [pop show];
+        }
+            break;
+        case 6://系统UIAlertController
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"恭喜您" message:@"获得一把拆宝箱钥匙" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"继续拆宝箱" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"继续拆宝箱...");
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"分享给好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"分享给好友...");
+            }]];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+            break;
+        case 7: //仿系统UIAlertController
+        {
+            MGPopController *pop = [[MGPopController alloc] initWithTitle:@"恭喜您" message:@"获得一把拆宝箱钥匙" image:nil];
+            [pop addAction:[MGPopAction actionWithTitle:@"继续拆宝箱" action:^{
+                NSLog(@"继续拆宝箱...");
+            }]];
+            
+            [pop addAction:[MGPopAction actionWithTitle:@"分享给好友" action:^{
+                NSLog(@"分享给好友...");
+            }]];
+            pop.titleFont = [UIFont boldSystemFontOfSize:17.0f];
+            pop.messageFont = [UIFont systemFontOfSize:13.0];
+            pop.showActionSeparator = YES;
+            pop.actionSpacing = 0;
+            pop.actionPaddingLeftRight = 0;
+            pop.actionPaddingBottom = 0;
+            pop.showCloseButton = NO;
             [pop show];
         }
             break;
