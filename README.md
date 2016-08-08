@@ -29,6 +29,9 @@ A custom popup view。自定义弹出框。
 
 <img src='https://github.com/songhailiang/MGPopController/blob/master/screenshots/screenshot3.gif' width='300' />
 
+## 带UITextField输入框
+<img src='https://github.com/songhailiang/MGPopController/blob/master/screenshots/screenshot4.gif' width='300' />
+
 # 安装方法
 将MGPopController文件夹里的MGPopController.h和MGPopController.m拖到你的项目中，再把Assets里的icon_close图片（右上角关闭按钮用到）加入到你的项目中就可以了。
 
@@ -53,16 +56,21 @@ MGPopController *pop = [[MGPopController alloc] initWithTitle:@"恭喜您" messa
 __weak __typeof(&*self)weakSelf = self
 ```
 
-3.Pop出来就行了
+3.添加UITextField输入框
+```objc
+[pop addTextFieldWithConfiguration:^(UITextField *textField) {
+      textField.placeholder = @"请输入手机号...";
+      textField.keyboardType = UIKeyboardTypeNumberPad;
+      textField.delegate = self;
+}];
+```
+
+4.Pop出来就行了
 ```objc
 [pop show];
 ```
 
 更多用法，请参见Demo！
-
-# 未来计划
-- 增加对输入框的支持
-
 
 # 最后
 Enjoy Yourself！！
