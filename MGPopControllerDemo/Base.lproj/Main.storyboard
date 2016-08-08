@@ -6,6 +6,38 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="ccV-Bf-Q2S">
+            <objects>
+                <viewController id="qrU-Qv-a66" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JRg-Bi-94s"/>
+                        <viewControllerLayoutGuide type="bottom" id="bW2-x0-w1E"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bPq-ut-SmD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywI-dg-wnj">
+                                <rect key="frame" x="84" y="110" width="41" height="30"/>
+                                <state key="normal" title="Demo"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="zAZ-33-APc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ywI-dg-wnj" firstAttribute="leading" secondItem="bPq-ut-SmD" secondAttribute="leading" constant="84" id="uyb-i8-9Lh"/>
+                            <constraint firstItem="ywI-dg-wnj" firstAttribute="top" secondItem="JRg-Bi-94s" secondAttribute="bottom" constant="46" id="vDf-yq-Isi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="trc-Gh-OcJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5P-FU-Ys5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2058.5" y="427.5"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -54,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2081.5" y="428.5"/>
+            <point key="canvasLocation" x="2525.5" y="428.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cnR-Fd-jgC">
@@ -87,7 +119,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="k4Z-TF-8p6"/>
+                        <segue destination="qrU-Qv-a66" kind="relationship" relationship="rootViewController" id="NkN-2b-nvS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wP2-0d-ive" userLabel="First Responder" sceneMemberID="firstResponder"/>

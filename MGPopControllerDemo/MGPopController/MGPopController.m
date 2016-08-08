@@ -54,6 +54,7 @@
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIView *actionContainerView;
+@property (nonatomic, strong) UIView *textFieldContainerView;
 
 @property (nonatomic, strong) NSMutableArray *actions;
 
@@ -127,24 +128,7 @@
     [self.containerView addSubview:self.messageLabel];
     [self.containerView addSubview:self.closeButton];
     [self.containerView addSubview:self.actionContainerView];
-    
-    [self.actions enumerateObjectsUsingBlock:^(MGPopAction *action, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.tag = idx;
-        [btn addTarget:self action:@selector(actionButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        if (action.image) {
-            [btn setImage:action.image forState:UIControlStateNormal];
-        }
-        else if (action.title.length) {
-            [btn setTitle:action.title forState:UIControlStateNormal];
-            [btn setTitleColor:action.titleColor forState:UIControlStateNormal];
-            [btn setTitleColor:action.disabledTitleColor forState:UIControlStateDisabled];
-            btn.titleLabel.font = action.titleFont;
-        }
-        btn.enabled = action.enable;
-        
-        [self.actionContainerView addSubview:btn];
-    }];
+    [self.containerView addSubview:self.textFieldContainerView];
     
     [self makeConstrains];
     
@@ -178,10 +162,15 @@
         make.top.mas_equalTo(self.titleLabel.mas_bottom).offset(10);
     }];
     
+    [self.textFieldContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.trailing.offset(0);
+        make.top.mas_equalTo(self.messageLabel.mas_bottom).offset(15);
+    }];
+    
     [self.actionContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.offset(self.actionPaddingLeftRight);
         make.trailing.offset(-self.actionPaddingLeftRight);
-        make.top.mas_equalTo(self.messageLabel.mas_bottom).offset(15);
+        make.top.mas_equalTo(self.textFieldContainerView.mas_bottom).offset(0);
         make.bottom.equalTo(self.containerView).offset(-self.actionPaddingBottom);
     }];
     
@@ -192,6 +181,24 @@
     }];
     
     //Actions
+    [self.actions enumerateObjectsUsingBlock:^(MGPopAction *action, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = idx;
+        [btn addTarget:self action:@selector(actionButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        if (action.image) {
+            [btn setImage:action.image forState:UIControlStateNormal];
+        }
+        else if (action.title.length) {
+            [btn setTitle:action.title forState:UIControlStateNormal];
+            [btn setTitleColor:action.titleColor forState:UIControlStateNormal];
+            [btn setTitleColor:action.disabledTitleColor forState:UIControlStateDisabled];
+            btn.titleLabel.font = action.titleFont;
+        }
+        btn.enabled = action.enable;
+        
+        [self.actionContainerView addSubview:btn];
+    }];
+    
     NSInteger count = self.actions.count;
     __block UIButton *preBtn;
     [self.actionContainerView.subviews enumerateObjectsUsingBlock:^(UIButton * _Nonnull btn, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -233,10 +240,34 @@
             [separator mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.bottom.offset(0);
                 make.width.equalTo(@0.5);
-                make.centerX.equalTo(self.actionContainerView).multipliedBy((i*2+1)/((CGFloat)separatorNum));
+                make.centerX.equalTo(self.actionContainerView).multipliedBy((i*2+2)/((CGFloat)self.actions.count));
             }];
         }
     }
+    
+    //TextFields
+    [self.textFields enumerateObjectsUsingBlock:^(UITextField * _Nonnull textField, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.textFieldContainerView addSubview:textField];
+    }];
+    
+    __block UITextField *preTextField;
+    [self.textFieldContainerView.subviews enumerateObjectsUsingBlock:^(UITextField * textField, NSUInteger idx, BOOL * _Nonnull stop) {
+        [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.offset(16);
+            make.trailing.offset(-16);
+            if (preTextField) {
+                make.top.equalTo(preTextField.mas_bottom).offset(8);
+            }
+            else {
+                make.top.offset(0);
+            }
+            if (idx == self.textFields.count-1) { //最后一个
+                make.bottom.offset(-8);
+            }
+        }];
+        preTextField = textField;
+    }];
+    
 }
 
 #pragma mark - Public Method
@@ -244,6 +275,21 @@
 - (void)addAction:(MGPopAction *)action {
 
     [_actions addObject:action];
+}
+
+- (void)addTextFieldWithConfiguration:(void (^)(UITextField *textField))configuration {
+
+    UITextField *textField = [[UITextField alloc] init];
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    textField.font = [UIFont systemFontOfSize:13.0f];
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:_textFields];
+    [arr addObject:textField];
+    _textFields = arr;
+    
+    if (configuration) {
+        configuration(textField);
+    }
 }
 
 - (void)show {
@@ -438,6 +484,15 @@
     }
     
     return _actionContainerView;
+}
+
+- (UIView *)textFieldContainerView {
+
+    if (!_textFieldContainerView) {
+        _textFieldContainerView = [[UIView alloc] init];
+    }
+    
+    return _textFieldContainerView;
 }
 
 @end

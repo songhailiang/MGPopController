@@ -31,6 +31,8 @@
 
 @interface MGPopController : UIViewController
 
+@property (nonatomic, readonly) NSArray<UITextField *> *textFields;
+
 #pragma mark - UI Property
 
 /**
@@ -105,6 +107,8 @@
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message image:(UIImage *)image;
 
 - (void)addAction:(MGPopAction *)action;
+
+- (void)addTextFieldWithConfiguration:(void (^)(UITextField *textField))configuration;
 
 - (void)show;
 
