@@ -271,6 +271,7 @@
     NSLog(@"登录中...%@   %@", mobile, password);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.loginController.view animated:YES];
     
+    //模拟http请求异步返回数据
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"登录成功...");
         [hud hideAnimated:YES];
