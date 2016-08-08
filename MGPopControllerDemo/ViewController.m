@@ -10,6 +10,7 @@
 
 #import "MGPopController.h"
 #import <MBProgressHUD.h>
+#import <IQKeyboardManager.h>
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
 
@@ -205,10 +206,12 @@
             
             [pop addAction:[MGPopAction actionWithTitle:@"关闭" action:^{
                 NSLog(@"关闭...");
+                [[IQKeyboardManager sharedManager] resignFirstResponder];
             }]];
             
             __weak __typeof(&*self)weakSelf = self;
             MGPopAction *action = [MGPopAction actionWithTitle:@"登录" action:^{
+                [[IQKeyboardManager sharedManager] resignFirstResponder];
                 [weakSelf loginWithMobile:[pop.textFields firstObject].text password:[pop.textFields objectAtIndex:1].text];
             }];
             action.autoDismiss = NO;
