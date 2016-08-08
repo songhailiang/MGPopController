@@ -201,7 +201,7 @@
             break;
         case 8: //带TextField
         {
-            MGPopController *pop = [[MGPopController alloc] initWithTitle:@"登录" message:@"请输入账号密码" image:[UIImage imageNamed:@"image_key"]];
+            MGPopController *pop = [[MGPopController alloc] initWithTitle:@"登录" message:nil image:nil];
             
             [pop addAction:[MGPopAction actionWithTitle:@"关闭" action:^{
                 NSLog(@"关闭...");

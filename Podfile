@@ -7,6 +7,7 @@ target 'MGPopControllerDemo' do
 
 pod 'Masonry', '~> 1.0.1'
 pod 'MBProgressHUD', '~> 1.0.0'
+pod 'IQKeyboardManager', '~> 4.0.4'
 
 end
 

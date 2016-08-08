@@ -1,12 +1,15 @@
 PODS:
+  - IQKeyboardManager (4.0.4)
   - Masonry (1.0.1)
   - MBProgressHUD (1.0.0)
 
 DEPENDENCIES:
+  - IQKeyboardManager (~> 4.0.4)
   - Masonry (~> 1.0.1)
   - MBProgressHUD (~> 1.0.0)
 
 SPEC CHECKSUMS:
+  IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
 
